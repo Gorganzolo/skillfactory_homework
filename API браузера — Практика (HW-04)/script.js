@@ -8,6 +8,29 @@ const messagesContainer = document.querySelector('.chat-app__messages');
 
 let websocket;
 
+// --- Логика для дополнительных заданий ---
+
+// Задание 1: Переключение иконок
+const btnIcon = document.querySelector('.task-btn--icon');
+const icon01 = document.querySelector('.task-btn__icon--01');
+const icon02 = document.querySelector('.task-btn__icon--02');
+
+btnIcon.addEventListener('click', () => {
+  icon01.classList.toggle('hidden');
+  icon02.classList.toggle('hidden');
+});
+
+// Задание 2: Размер окна
+const btnScreen = document.querySelector('.task-btn--screen');
+
+btnScreen.addEventListener('click', () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  alert(`Размер окна: ${width}px x ${height}px`);
+});
+
+// --- Логика для чата (Задание 3) ---
+
 // Инициализация WebSocket
 function initWebSocket() {
   websocket = new WebSocket(wsUrl);

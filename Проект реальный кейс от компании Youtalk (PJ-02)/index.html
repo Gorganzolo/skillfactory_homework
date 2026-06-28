@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог компании Youtalk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+    <div class="container header__container">
+      <a href="index.html" class="header__logo">
+        <img src="img/icon/main_logo.svg" alt="Youtalk">
+      </a>
+      <nav class="header__nav nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="#" class="nav__link">О нас</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Тарифы</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Для бизнеса</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Психологам</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Сертификаты</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Материалы</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="button button--accent header__button">Подобрать психолога</button>
+        <button class="header__burger burger" aria-label="Открыть меню" id="burger-btn">
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu__inner">
+      <nav class="mobile-menu__nav nav">
+        <ul class="nav__list nav__list--mobile">
+          <li class="nav__item"><a href="#" class="nav__link">О нас</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Тарифы</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Для бизнеса</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Психологам</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Сертификаты</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Материалы</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-menu__footer">
+        <button class="button button--accent mobile-menu__button">Подобрать психолога</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container main__container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Главная</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--active" aria-current="page">Блог</li>
+        </ol>
+      </nav>
+
+      <h1 class="page-title">Блог</h1>
+
+      <div class="tags-filter">
+        <ul class="tags-filter__list">
+          <li class="tags-filter__item"><button class="tags-filter__button tags-filter__button--active">Все</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Самооценка и самопринятие</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Self</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Чувства и эмоции</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Тревога</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Упражнения</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Психология питания</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Насилие</button></li>
+          <li class="tags-filter__item"><button class="tags-filter__button">Личное здоровье</button></li>
+        </ul>
+      </div>
+
+      <div class="articles-grid">
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (1).png" alt="Как не ссориться" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Self</span>
+              <span class="badge">Самооценка</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">Как не ссориться?</a></h2>
+            <p class="article-card__author">Лиза Файнтух</p>
+            <p class="article-card__excerpt">Как не ссориться с близкими, если вы живете вместе и сейчас находитесь в режиме самоизоляции?</p>
+            <p class="article-card__date">11.08.2021</p>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (2).png" alt="Справляемся с тревогой" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Self</span>
+              <span class="badge">Тревога</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">Как справиться с тревогой?</a></h2>
+            <p class="article-card__author">Мария Иванова</p>
+            <p class="article-card__excerpt">Простые и эффективные упражнения для снижения уровня тревоги в повседневной жизни.</p>
+            <p class="article-card__date">15.08.2021</p>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (3).png" alt="Работа с эмоциями" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Self</span>
+              <span class="badge">Чувства и эмоции</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">Эмоциональное выгорание</a></h2>
+            <p class="article-card__author">Иван Петров</p>
+            <p class="article-card__excerpt">Как распознать эмоциональное выгорание на ранних стадиях и что с этим делать.</p>
+            <p class="article-card__date">20.08.2021</p>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (4).png" alt="Упражнения для расслабления" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Упражнения</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">5 упражнений для расслабления</a></h2>
+            <p class="article-card__author">Анна Сидорова</p>
+            <p class="article-card__excerpt">Практические советы и упражнения, которые помогут вам расслабиться после тяжелого дня.</p>
+            <p class="article-card__date">25.08.2021</p>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (5).png" alt="Здоровое питание" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Психология питания</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">Психология питания</a></h2>
+            <p class="article-card__author">Елена Смирнова</p>
+            <p class="article-card__excerpt">Как наши эмоции влияют на пищевые привычки и как научиться слушать свое тело.</p>
+            <p class="article-card__date">30.08.2021</p>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-card__image-wrapper">
+            <img src="img/content/Image_ (6).png" alt="Личные границы" class="article-card__image">
+            <div class="article-card__badges">
+              <span class="badge">Личное здоровье</span>
+            </div>
+          </div>
+          <div class="article-card__content">
+            <h2 class="article-card__title"><a href="article.html">Как выстраивать личные границы</a></h2>
+            <p class="article-card__author">Дмитрий Волков</p>
+            <p class="article-card__excerpt">Почему важно уметь говорить «нет» и как это поможет сохранить ваше психологическое здоровье.</p>
+            <p class="article-card__date">05.09.2021</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="pagination">
+        <button class="button button--accent pagination__more">Ещё</button>
+      </div>
+</div>
+  </main>
+
+    <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__top">
+        <div class="footer__nav-cols">
+          <nav class="footer__nav footer__nav--col1">
+            <ul class="footer__nav-list">
+              <li><a href="#">О нас</a></li>
+              <li><a href="#">Тарифы</a></li>
+              <li><a href="#">Для бизнеса</a></li>
+              <li><a href="#">Психологам</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </nav>
+          <nav class="footer__nav footer__nav--col2">
+            <ul class="footer__nav-list">
+              <li><a href="#">Блог</a></li>
+              <li><a href="#">Вебинары</a></li>
+              <li><a href="#">Подкаст</a></li>
+              <li><a href="#">Сертификат</a></li>
+              <li><a href="#">Контакты</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer__subscribe subscribe">
+          <p class="subscribe__text">Одно письмо в неделю со свежими новостями и акциями</p>
+          <form class="subscribe__form">
+            <input type="email" class="subscribe__input" placeholder="Ваш e-mail" required>
+            <button type="submit" class="subscribe__button" aria-label="Подписаться">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 8h14M8 1l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </form>
+          <p class="subscribe__disclaimer">
+            Нажимая на кнопку, вы соглашаетесь на обработку персональных данных в соответствии с <a href="#">ФЗ РФ № 152-ФЗ</a>
+          </p>
+        </div>
+
+        <div class="footer__partner">
+          <img src="img/icon/ckolkovo.svg" alt="Sk Участник">
+        </div>
+
+        <div class="footer__socials socials">
+          <a href="#" class="socials__link" aria-label="ВКонтакте">
+            <img src="img/icon/vk.svg" alt="ВКонтакте">
+          </a>
+          <a href="#" class="socials__link" aria-label="Telegram">
+            <img src="img/icon/telegram.svg" alt="Telegram">
+          </a>
+          <a href="#" class="socials__link" aria-label="Twitter">
+            <img src="img/icon/twitter.svg" alt="Twitter">
+          </a>
+          <a href="#" class="socials__link" aria-label="Яндекс Дзен">
+            <img src="img/icon/dzeng.svg" alt="Яндекс Дзен">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">© Youtalk, 2018 – 2022</p>
+        <div class="footer__legal">
+          <a href="#">Юридические документы</a>
+          <a href="#">Способы оплаты</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burger = document.getElementById('burger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (burger && mobileMenu) {
+        burger.addEventListener('click', () => {
+          burger.classList.toggle('burger--active');
+          mobileMenu.classList.toggle('mobile-menu--active');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

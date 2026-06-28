@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея с картинками</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="gallery">
+    <header class="gallery__header">
+      <h1 class="gallery__title">Галерея с картинками</h1>
+      <button class="gallery__button" id="load-btn">Загрузить картинки</button>
+    </header>
+
+    <div class="gallery__loader gallery__loader--hidden" id="loader">
+      <div class="gallery__spinner"></div>
+      <p class="gallery__loader-text">Загрузка...</p>
+    </div>
+
+    <div class="gallery__error gallery__error--hidden" id="error-msg"></div>
+
+    <section class="gallery__grid" id="gallery-container">
+      <!-- Сюда будут динамически добавляться карточки с картинками -->
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

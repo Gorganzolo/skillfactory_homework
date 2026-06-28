@@ -8,9 +8,51 @@ body {
   background-color: #f4f4f9;
 }
 
-.chat-app {
+.app-container {
   width: 100%;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.extra-tasks {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.task-btn {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.task-btn:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-btn--icon {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.chat-app {
+  width: 100%;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

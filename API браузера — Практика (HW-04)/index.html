@@ -3,20 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Эхо-чат</title>
+  <title>API браузера — Практика</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="chat-app">
-    <div class="chat-app__controls">
-      <input type="text" class="chat-app__input" placeholder="Введите сообщение..." aria-label="Сообщение">
-      <button class="chat-app__btn chat-app__btn--send">Отправить</button>
-      <button class="chat-app__btn chat-app__btn--geo">Геолокация</button>
+  <div class="app-container">
+    <div class="extra-tasks">
+      <!-- Задание 1 -->
+      <button class="task-btn task-btn--icon" aria-label="Переключить иконку">
+        <svg class="task-btn__icon task-btn__icon--01" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+          <line x1="9" y1="9" x2="9.01" y2="9"></line>
+          <line x1="15" y1="9" x2="15.01" y2="9"></line>
+        </svg>
+        <svg class="task-btn__icon task-btn__icon--02 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+          <line x1="9" y1="9" x2="9.01" y2="9"></line>
+          <line x1="15" y1="9" x2="15.01" y2="9"></line>
+        </svg>
+      </button>
+
+      <!-- Задание 2 -->
+      <button class="task-btn task-btn--screen">Размер окна</button>
     </div>
-    <div class="chat-app__messages">
-      <!-- Сообщения будут появляться здесь -->
-    </div>
-  </main>
+
+    <!-- Задание 3 -->
+    <main class="chat-app">
+      <div class="chat-app__controls">
+        <input type="text" class="chat-app__input" placeholder="Введите сообщение..." aria-label="Сообщение">
+        <button class="chat-app__btn chat-app__btn--send">Отправить</button>
+        <button class="chat-app__btn chat-app__btn--geo">Геолокация</button>
+      </div>
+      <div class="chat-app__messages">
+        <!-- Сообщения будут появляться здесь -->
+      </div>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>

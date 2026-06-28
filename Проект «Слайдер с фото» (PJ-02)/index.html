@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Slider</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Yeseva+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+    <section class="slider">
+        <div class="slider__container">
+            <div class="slider__left">
+                <h2 class="slider__title">COMPLETED<br>PROJECTS</h2>
+                <p class="slider__description">Only a small part of the work performed by our company is presented on the site. For 14 years on in the construction market we have made happy more than 1000 families</p>
+
+                <div class="slider__details details">
+                    <div class="details__item">
+                        <h3 class="details__title">CITY:</h3>
+                        <p class="details__value" id="city-value"></p>
+                    </div>
+                    <div class="details__item">
+                        <h3 class="details__title">APARTMENT AREA:</h3>
+                        <p class="details__value" id="area-value"></p>
+                    </div>
+                    <div class="details__item">
+                        <h3 class="details__title">REPAIR TIME:</h3>
+                        <p class="details__value" id="time-value"></p>
+                    </div>
+                    <div class="details__item">
+                        <h3 class="details__title">REPAIR COST:</h3>
+                        <p class="details__value" id="cost-value"></p>
+                    </div>
+                </div>
+
+                <div class="slider__controls controls">
+                    <button class="controls__arrow controls__arrow--prev" id="prev-btn" aria-label="Previous"></button>
+                    <div class="controls__dots" id="dots-container"></div>
+                    <button class="controls__arrow controls__arrow--next" id="next-btn" aria-label="Next"></button>
+                </div>
+            </div>
+
+            <div class="slider__right">
+                <nav class="slider__nav nav">
+                    <ul class="nav__list" id="nav-list"></ul>
+                </nav>
+                <div class="slider__image-wrapper">
+                    <img src="" alt="" class="slider__image" id="slider-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

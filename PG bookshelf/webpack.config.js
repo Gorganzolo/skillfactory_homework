@@ -24,6 +24,11 @@ module.exports = {
           }
         }
       },
+      // ИЗМЕНЕНИЕ 1: Добавили html-loader, чтобы Webpack видел картинки внутри HTML
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
       {
         test: /\.scss$/,
         use: [
@@ -33,7 +38,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                quietDeps: true, // suppress sass warnings for dependencies
+                quietDeps: true, // подавление предупреждений sass для зависимостей
               },
             },
           },
@@ -49,7 +54,9 @@ module.exports = {
     ],
   },
   plugins: [
+    // ИЗМЕНЕНИЕ 2: Указали точный путь к файлу .env внутри папки src
     new Dotenv({
+      path: path.resolve(__dirname, 'src/.env'),
       systemvars: true
     }),
     new HtmlWebpackPlugin({

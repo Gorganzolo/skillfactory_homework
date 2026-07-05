@@ -1,0 +1,82 @@
+.userMenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.avatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.arrow {
+  width: 12px;
+  height: 12px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.41 0.589966L6 5.16997L10.59 0.589966L12 1.99997L6 7.99997L0 1.99997L1.41 0.589966Z" fill="white"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.arrow.up {
+  transform: rotate(180deg);
+}
+
+.arrow.down {
+  transform: rotate(0deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: var(--bg-card);
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 130px;
+  z-index: 100;
+}
+
+.dropdownArrow {
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--bg-card);
+  transform: rotate(45deg);
+  border-top-left-radius: 2px;
+}
+
+.menuList {
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+}
+
+.menuItem {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  color: var(--text-main);
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

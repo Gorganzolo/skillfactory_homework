@@ -1,0 +1,22 @@
+.footer {
+  background-color: var(--bg-header-footer);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-light);
+  font-size: 18px;
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}

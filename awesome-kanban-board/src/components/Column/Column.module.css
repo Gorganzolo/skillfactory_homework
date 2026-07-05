@@ -1,0 +1,90 @@
+.column {
+  background-color: var(--bg-column);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  max-height: calc(100vh - 200px);
+}
+
+.title {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-main);
+}
+
+.taskList {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  /* Scrollbar styles for webkit */
+  scrollbar-width: thin;
+  scrollbar-color: #C1C7D0 transparent;
+}
+
+.taskList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.taskList::-webkit-scrollbar-thumb {
+  background-color: #C1C7D0;
+  border-radius: 4px;
+}
+
+.addControls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input, .select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #DFE1E6;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.submitBtn {
+  background-color: #0079BF;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  align-self: flex-start;
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: #0067A3;
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  justify-content: flex-start;
+}
+
+.addBtn:not(.disabled):hover {
+  background-color: rgba(9, 30, 66, 0.08);
+  color: var(--text-main);
+}
+
+.disabled {
+  color: #A5ADBA;
+  cursor: not-allowed;
+}
+
+.plus {
+  font-size: 18px;
+  line-height: 1;
+}

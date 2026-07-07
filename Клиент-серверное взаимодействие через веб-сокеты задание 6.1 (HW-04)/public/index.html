@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Монитор Новостей по WebSockets</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Load Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="icon">📡</span>
+        <h1>WebSocket News Broadcaster</h1>
+      </div>
+      <div class="status-indicator">
+        <span id="header-status-dot" class="dot disconnected"></span>
+        <span id="header-status-text">Отключен</span>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <!-- Left sidebar with connection diagnostics and news simulator -->
+      <aside class="sidebar">
+        <!-- Connection Diagnostics Card -->
+        <section class="card diagnostics-card">
+          <h2>Диагностика связи</h2>
+          <div class="status-row">
+            <span class="label">Статус:</span>
+            <span id="status-badge" class="badge disconnected">Отключено</span>
+          </div>
+          <div class="status-row">
+            <span class="label">Задержка (Ping):</span>
+            <span id="latency-val" class="latency-val">- ms</span>
+          </div>
+          <div class="status-row">
+            <span class="label">Последнее обновление:</span>
+            <span id="last-ping-time" class="time-val">Никогда</span>
+          </div>
+          <div class="actions-row">
+            <button id="manual-ping-btn" class="btn btn-secondary">Проверить связь</button>
+          </div>
+        </section>
+
+        <!-- News Simulator (REST POST sender) -->
+        <section class="card simulator-card">
+          <h2>Симулятор публикации</h2>
+          <p class="card-desc">Отправьте новость через REST API <code>POST /news</code>, чтобы проверить автоматическую рассылку по WebSocket.</p>
+          <form id="simulator-form" class="sim-form">
+            <div class="form-group">
+              <label for="news-title">Заголовок новости</label>
+              <input type="text" id="news-title" required placeholder="Введите заголовок...">
+            </div>
+            <div class="form-group">
+              <label for="news-content">Содержимое новости</label>
+              <textarea id="news-content" required placeholder="Введите текст новости..."></textarea>
+            </div>
+            <button type="submit" id="submit-news-btn" class="btn btn-primary">
+              <span>Опубликовать новость</span>
+            </button>
+          </form>
+          <div id="sim-status-msg" class="form-feedback hidden"></div>
+        </section>
+      </aside>
+
+      <!-- Main section displaying news feed -->
+      <main class="content-area">
+        <div class="section-header">
+          <h2>Лента новостей в реальном времени</h2>
+          <span id="news-count" class="counter">0</span>
+        </div>
+        <div id="news-feed" class="news-feed">
+          <!-- News cards will be inserted dynamically here -->
+          <div id="empty-feed" class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>Нет новостей. Опубликуйте новость слева, чтобы запустить рассылку!</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="client.js"></script>
+</body>
+</html>

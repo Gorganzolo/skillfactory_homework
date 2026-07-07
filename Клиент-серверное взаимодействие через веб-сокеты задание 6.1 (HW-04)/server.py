@@ -107,13 +107,16 @@ async def websocket_handler(request):
 # Create application
 app = web.Application()
 
+public_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public')
+
+async def index_handler(request):
+    return web.FileResponse(os.path.join(public_dir, 'index.html'))
+
 # Routes setup
+app.router.add_get('/', index_handler)
 app.router.add_post('/news', post_news)
 app.router.add_get('/ws', websocket_handler)
-
-# Serve client static assets
-public_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public')
-app.router.add_static('/', path=public_dir, show_index=True)
+app.router.add_static('/', path=public_dir)
 
 if __name__ == '__main__':
     print("=====================================================")

@@ -61,7 +61,7 @@ function connect() {
 
   // Determine WebSocket URL dynamically based on location
   const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-  const wsUrl = `${protocol}${window.location.host}`;
+  const wsUrl = `${protocol}${window.location.host}/ws`;
 
   socket = new WebSocket(wsUrl);
 

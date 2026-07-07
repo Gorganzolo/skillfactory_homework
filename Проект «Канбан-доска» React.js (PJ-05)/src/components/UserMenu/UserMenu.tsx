@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './UserMenu.module.css';
 
 const UserMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className={styles.userMenu}>
+    <div className={styles.userMenu} ref={menuRef}>
       <div className={styles.avatarContainer} onClick={toggleMenu}>
-        {/* Placeholder for SVG avatar, using a div with CSS or an img later if needed. For now, building a custom one or using simple CSS */}
+        {/* Placeholder for SVG avatar */}
         <div className={styles.avatarPlaceholder}>
            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="20" cy="20" r="20" fill="white"/>
@@ -24,8 +40,8 @@ const UserMenu: React.FC = () => {
         <div className={styles.dropdown}>
           <div className={styles.dropdownArrow}></div>
           <ul className={styles.menuList}>
-            <li className={styles.menuItem}>Profile</li>
-            <li className={styles.menuItem}>Log Out</li>
+            <li className={styles.menuItem}>Профиль</li>
+            <li className={styles.menuItem}>Выйти</li>
           </ul>
         </div>
       )}

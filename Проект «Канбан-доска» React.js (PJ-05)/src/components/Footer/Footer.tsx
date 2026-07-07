@@ -13,11 +13,11 @@ const Footer: React.FC<FooterProps> = ({ activeTasksCount, finishedTasksCount })
   return (
     <footer className={styles.footer}>
       <div className={styles.stats}>
-        <span>Active tasks: {activeTasksCount}</span>
-        <span>Finished tasks: {finishedTasksCount}</span>
+        <span>Активные задачи: {activeTasksCount}</span>
+        <span>Завершенные задачи: {finishedTasksCount}</span>
       </div>
       <div className={styles.copy}>
-        Kanban board by {name}, {year}
+        Канбан-доска от {name}, {year}
       </div>
     </footer>
   );

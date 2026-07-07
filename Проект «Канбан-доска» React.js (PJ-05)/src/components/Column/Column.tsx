@@ -12,6 +12,13 @@ interface ColumnProps {
   previousColumnTasks: Task[];
 }
 
+const statusTranslations: Record<TaskStatus, string> = {
+  'Backlog': 'Бэклог',
+  'Ready': 'Готово',
+  'In Progress': 'В работе',
+  'Finished': 'Завершено'
+};
+
 const Column: React.FC<ColumnProps> = ({ title, tasks, allTasks, setTasks, previousColumnTasks }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTaskName, setNewTaskName] = useState('');
@@ -46,11 +53,25 @@ const Column: React.FC<ColumnProps> = ({ title, tasks, allTasks, setTasks, previ
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleAddSubmit();
+    } else if (e.key === 'Escape') {
+      setIsAdding(false);
+      setNewTaskName('');
+      setSelectedTaskId('');
+    }
+  };
+
   const isPreviousEmpty = previousColumnTasks.length === 0;
 
   return (
     <div className={styles.column}>
-      <h3 className={styles.title}>{title}</h3>
+      <div className={styles.header}>
+        <h3 className={styles.title}>{statusTranslations[title]}</h3>
+        <span className={styles.badge}>{tasks.length}</span>
+      </div>
+      
       <div className={styles.taskList}>
         {tasks.map((task) => (
           <TaskCard key={task.id} task={task} />
@@ -65,7 +86,8 @@ const Column: React.FC<ColumnProps> = ({ title, tasks, allTasks, setTasks, previ
               className={styles.input}
               value={newTaskName}
               onChange={(e) => setNewTaskName(e.target.value)}
-              placeholder="New task title..."
+              onKeyDown={handleKeyDown}
+              placeholder="Название новой задачи..."
               autoFocus
             />
           ) : (
@@ -73,16 +95,22 @@ const Column: React.FC<ColumnProps> = ({ title, tasks, allTasks, setTasks, previ
               className={styles.select}
               value={selectedTaskId}
               onChange={(e) => setSelectedTaskId(e.target.value)}
+              onKeyDown={handleKeyDown}
             >
-              <option value="" disabled>Select task</option>
+              <option value="" disabled>Выберите задачу...</option>
               {previousColumnTasks.map(t => (
                 <option key={t.id} value={t.id}>{t.name}</option>
               ))}
             </select>
           )}
-          <button className={styles.submitBtn} onClick={handleAddSubmit}>
-            Submit
-          </button>
+          <div className={styles.actionButtons}>
+            <button className={styles.submitBtn} onClick={handleAddSubmit}>
+              Добавить
+            </button>
+            <button className={styles.cancelBtn} onClick={() => { setIsAdding(false); setNewTaskName(''); setSelectedTaskId(''); }}>
+              Отмена
+            </button>
+          </div>
         </div>
       ) : (
         <button
@@ -90,7 +118,7 @@ const Column: React.FC<ColumnProps> = ({ title, tasks, allTasks, setTasks, previ
           onClick={() => setIsAdding(true)}
           disabled={title !== 'Backlog' && isPreviousEmpty}
         >
-          <span className={styles.plus}>+</span> Add card
+          <span className={styles.plus}>+</span> Добавить карточку
         </button>
       )}
     </div>

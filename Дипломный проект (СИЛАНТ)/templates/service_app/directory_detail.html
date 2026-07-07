@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Справочник: {{ directory_item.name }} - Детали{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 2rem auto;">
+    <div style="border-bottom: 2px solid var(--beige-bg); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin: 0;">Справочник: {{ directory_title }}</h2>
+        <a href="javascript:history.back()" class="btn-secondary">Назад</a>
+    </div>
+
+    <div class="detail-item" style="border-left-width: 6px;">
+        <div class="detail-label" style="font-size: 0.95rem; margin-bottom: 0.5rem;">Наименование элемента</div>
+        <div class="detail-value" style="font-size: 1.6rem; color: var(--primary-blue); margin-bottom: 1rem;">
+            {{ directory_item.name }}
+        </div>
+        
+        <div class="detail-label" style="font-size: 0.95rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Описание</div>
+        <div class="detail-value" style="font-weight: normal; font-size: 1.1rem; line-height: 1.7; white-space: pre-line; color: #475569; background-color: rgba(235, 230, 214, 0.2); padding: 1rem; border-radius: var(--radius);">
+            {{ directory_item.description|default:"Описание для данного элемента справочника отсутствует." }}
+        </div>
+    </div>
+</div>
+{% endblock %}

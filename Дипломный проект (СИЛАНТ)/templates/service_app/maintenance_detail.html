@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Запись ТО машины {{ maintenance.machine.vin }} - Детали{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--beige-bg); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin: 0;">Техническое обслуживание: {{ maintenance.machine.vin }}</h2>
+        <div>
+            {% if user.role == 'manager' %}
+                <a href="{% url 'maintenance_edit' maintenance.id %}" class="btn-auth">Редактировать</a>
+            {% endif %}
+            <a href="{% url 'home' %}?tab=maintenances" class="btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+
+    <div class="detail-grid">
+        <!-- 1. Machine link -->
+        <div class="detail-item">
+            <div class="detail-label">Машина (Заводской №)</div>
+            <div class="detail-value">
+                <a href="{% url 'machine_detail' maintenance.machine.vin %}">{{ maintenance.machine.vin }}</a>
+            </div>
+            <div class="detail-desc">Модель техники: {{ maintenance.machine.technique_model.name }}</div>
+        </div>
+
+        <!-- 2. Maintenance Type -->
+        <div class="detail-item">
+            <div class="detail-label">Вид ТО</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'MaintenanceType' maintenance.maintenance_type.id %}">{{ maintenance.maintenance_type.name }}</a>
+            </div>
+            {% if maintenance.maintenance_type.description %}
+                <div class="detail-desc">{{ maintenance.maintenance_type.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 3. Maintenance Date -->
+        <div class="detail-item">
+            <div class="detail-label">Дата проведения ТО</div>
+            <div class="detail-value">{{ maintenance.maintenance_date }}</div>
+        </div>
+
+        <!-- 4. Operating Hours -->
+        <div class="detail-item">
+            <div class="detail-label">Наработка, м/час</div>
+            <div class="detail-value">{{ maintenance.operating_hours }} м/ч</div>
+        </div>
+
+        <!-- 5. Work Order Num -->
+        <div class="detail-item">
+            <div class="detail-label">№ заказ-наряда</div>
+            <div class="detail-value">{{ maintenance.work_order_num }}</div>
+        </div>
+
+        <!-- 6. Work Order Date -->
+        <div class="detail-item">
+            <div class="detail-label">Дата заказ-наряда</div>
+            <div class="detail-value">{{ maintenance.work_order_date }}</div>
+        </div>
+
+        <!-- 7. Service Company (performer) -->
+        <div class="detail-item">
+            <div class="detail-label">Организация, проводившая ТО</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'ServiceCompany' maintenance.service_company.id %}">{{ maintenance.service_company.name }}</a>
+            </div>
+            {% if maintenance.service_company.description %}
+                <div class="detail-desc">{{ maintenance.service_company.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

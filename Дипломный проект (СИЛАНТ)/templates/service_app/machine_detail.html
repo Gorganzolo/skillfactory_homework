@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Машина {{ machine.vin }} - Детали{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--beige-bg); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin: 0;">Характеристики машины: {{ machine.vin }}</h2>
+        <div>
+            {% if user.role == 'manager' %}
+                <a href="{% url 'machine_edit' machine.vin %}" class="btn-auth">Редактировать</a>
+            {% endif %}
+            <a href="{% url 'home' %}?tab=machines" class="btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+
+    <div class="detail-grid">
+        <!-- 1. VIN -->
+        <div class="detail-item">
+            <div class="detail-label">Зав. № машины</div>
+            <div class="detail-value">{{ machine.vin }}</div>
+        </div>
+
+        <!-- 2. Technique Model -->
+        <div class="detail-item">
+            <div class="detail-label">Модель техники</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'TechniqueModel' machine.technique_model.id %}">{{ machine.technique_model.name }}</a>
+            </div>
+            {% if machine.technique_model.description %}
+                <div class="detail-desc">{{ machine.technique_model.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 3. Engine Model -->
+        <div class="detail-item">
+            <div class="detail-label">Модель двигателя</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'EngineModel' machine.engine_model.id %}">{{ machine.engine_model.name }}</a>
+            </div>
+            {% if machine.engine_model.description %}
+                <div class="detail-desc">{{ machine.engine_model.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 4. Engine Num -->
+        <div class="detail-item">
+            <div class="detail-label">Зав. № двигателя</div>
+            <div class="detail-value">{{ machine.engine_num }}</div>
+        </div>
+
+        <!-- 5. Transmission Model -->
+        <div class="detail-item">
+            <div class="detail-label">Модель трансмиссии</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'TransmissionModel' machine.transmission_model.id %}">{{ machine.transmission_model.name }}</a>
+            </div>
+            {% if machine.transmission_model.description %}
+                <div class="detail-desc">{{ machine.transmission_model.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 6. Transmission Num -->
+        <div class="detail-item">
+            <div class="detail-label">Зав. № трансмиссии</div>
+            <div class="detail-value">{{ machine.transmission_num }}</div>
+        </div>
+
+        <!-- 7. Drive Axle Model -->
+        <div class="detail-item">
+            <div class="detail-label">Модель ведущего моста</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'DriveAxleModel' machine.drive_axle_model.id %}">{{ machine.drive_axle_model.name }}</a>
+            </div>
+            {% if machine.drive_axle_model.description %}
+                <div class="detail-desc">{{ machine.drive_axle_model.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 8. Drive Axle Num -->
+        <div class="detail-item">
+            <div class="detail-label">Зав. № ведущего моста</div>
+            <div class="detail-value">{{ machine.drive_axle_num }}</div>
+        </div>
+
+        <!-- 9. Steering Axle Model -->
+        <div class="detail-item">
+            <div class="detail-label">Модель управляемого моста</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'SteeringAxleModel' machine.steering_axle_model.id %}">{{ machine.steering_axle_model.name }}</a>
+            </div>
+            {% if machine.steering_axle_model.description %}
+                <div class="detail-desc">{{ machine.steering_axle_model.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 10. Steering Axle Num -->
+        <div class="detail-item">
+            <div class="detail-label">Зав. № управляемого моста</div>
+            <div class="detail-value">{{ machine.steering_axle_num }}</div>
+        </div>
+
+        <!-- 11. Supply Contract -->
+        <div class="detail-item">
+            <div class="detail-label">Договор поставки №, дата</div>
+            <div class="detail-value">{{ machine.supply_contract }}</div>
+        </div>
+
+        <!-- 12. Shipping Date -->
+        <div class="detail-item">
+            <div class="detail-label">Дата отгрузки с завода</div>
+            <div class="detail-value">{{ machine.shipping_date }}</div>
+        </div>
+
+        <!-- 13. Consignee -->
+        <div class="detail-item">
+            <div class="detail-label">Грузополучатель (конечный потребитель)</div>
+            <div class="detail-value">{{ machine.consignee }}</div>
+        </div>
+
+        <!-- 14. Delivery Address -->
+        <div class="detail-item">
+            <div class="detail-label">Адрес поставки (эксплуатации)</div>
+            <div class="detail-value">{{ machine.delivery_address }}</div>
+        </div>
+
+        <!-- 15. Client -->
+        <div class="detail-item">
+            <div class="detail-label">Клиент</div>
+            <div class="detail-value">{{ machine.client.first_name }} {{ machine.client.last_name }} ({{ machine.client.username }})</div>
+        </div>
+
+        <!-- 16. Service Company -->
+        <div class="detail-item">
+            <div class="detail-label">Сервисная компания</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'ServiceCompany' machine.service_company.id %}">{{ machine.service_company.name }}</a>
+            </div>
+            {% if machine.service_company.description %}
+                <div class="detail-desc">{{ machine.service_company.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 17. Equipment/Specification -->
+    <div class="detail-item" style="border-left-color: var(--accent-red); margin-top: 1.5rem;">
+        <div class="detail-label">Комплектация (доп. опции)</div>
+        <div class="detail-value" style="white-space: pre-line; font-weight: normal;">{{ machine.equipment|default:"Дополнительная комплектация отсутствует." }}</div>
+    </div>
+</div>
+{% endblock %}

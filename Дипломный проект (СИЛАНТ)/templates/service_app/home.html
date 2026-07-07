@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Сервисный Портал - Силант{% endblock %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+    <!-- GUEST VIEWS -->
+    <div class="card" style="text-align: center;">
+        <h2 class="card-title">Проверьте комплектацию и технические характеристики техники Силант</h2>
+        
+        <form method="get" action="{% url 'home' %}" class="search-form" style="justify-content: center; max-width: 600px; margin: 1.5rem auto;">
+            <input type="text" name="vin" placeholder="Введите заводской номер (Зав. № машины)" value="{{ vin_query }}" required class="form-input">
+            <button type="submit" class="btn-primary">Поиск</button>
+        </form>
+
+        {% if error_message %}
+            <div class="alert alert-danger" style="max-width: 600px; margin: 0 auto 1.5rem auto;">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        {% if machine %}
+            <div style="text-align: left; margin-top: 2rem;">
+                <h3 style="color: var(--primary-blue); margin-bottom: 1rem; border-bottom: 2px solid var(--beige-bg); padding-bottom: 0.5rem;">
+                    Результат поиска для: {{ machine.vin }}
+                </h3>
+                <p style="margin-bottom: 1.5rem; font-weight: bold; color: #475569;">
+                    Информация о комплектации и технических характеристиках Вашей техники
+                </p>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Зав. № машины</th>
+                                <th>Модель техники</th>
+                                <th>Модель двигателя</th>
+                                <th>Зав. № двигателя</th>
+                                <th>Модель трансмиссии</th>
+                                <th>Зав. № трансмиссии</th>
+                                <th>Модель ведущего моста</th>
+                                <th>Зав. № ведущего моста</th>
+                                <th>Модель управляемого моста</th>
+                                <th>Зав. № управляемого моста</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ machine.vin }}</td>
+                                <td>{{ machine.technique_model.name }}</td>
+                                <td>{{ machine.engine_model.name }}</td>
+                                <td>{{ machine.engine_num }}</td>
+                                <td>{{ machine.transmission_model.name }}</td>
+                                <td>{{ machine.transmission_num }}</td>
+                                <td>{{ machine.drive_axle_model.name }}</td>
+                                <td>{{ machine.drive_axle_num }}</td>
+                                <td>{{ machine.steering_axle_model.name }}</td>
+                                <td>{{ machine.steering_axle_num }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% else %}
+    <!-- AUTHENTICATED USER VIEWS -->
+    <div class="card">
+        <h2 class="card-title">Электронная сервисная книжка погрузчиков "Силант"</h2>
+        
+        <!-- Tabbed Navigation Header -->
+        <div class="tabs-header">
+            <a href="?tab=machines" class="tab-link {% if active_tab == 'machines' %}active{% endif %}">
+                <img src="{% static 'images/icon_machine.png' %}" alt="Машина" class="tab-icon-png machine-hover">
+                Технические данные
+            </a>
+            <a href="?tab=maintenances" class="tab-link {% if active_tab == 'maintenances' %}active{% endif %}">
+                <svg class="tab-icon gear-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 6px;">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                ТО
+            </a>
+            <a href="?tab=complaints" class="tab-link {% if active_tab == 'complaints' %}active{% endif %}">
+                <img src="{% static 'images/icon_complaint.png' %}" alt="Рекламации" class="tab-icon-png alert-bounce">
+                Рекламации
+            </a>
+        </div>
+
+        <!-- TAB CONTENT: MACHINES -->
+        {% if active_tab == 'machines' %}
+            <div class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="color: var(--primary-blue);">Список обслуживаемых машин</h3>
+                    {% if user.role == 'manager' %}
+                        <a href="{% url 'machine_add' %}" class="btn-auth">+ Добавить машину</a>
+                    {% endif %}
+                </div>
+
+                <!-- Filters -->
+                <form method="get" action="{% url 'home' %}" class="filters-block">
+                    <input type="hidden" name="tab" value="machines">
+                    
+                    <div class="filter-group">
+                        <label for="tech_model">Модель техники</label>
+                        <select name="tech_model" id="tech_model" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все модели</option>
+                            {% for m in tech_models %}
+                                <option value="{{ m.id }}" {% if selected.tech_model == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="eng_model">Модель двигателя</label>
+                        <select name="eng_model" id="eng_model" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все модели</option>
+                            {% for m in engine_models %}
+                                <option value="{{ m.id }}" {% if selected.eng_model == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="trans_model">Модель трансмиссии</label>
+                        <select name="trans_model" id="trans_model" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все модели</option>
+                            {% for m in transmission_models %}
+                                <option value="{{ m.id }}" {% if selected.trans_model == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="drive_model">Модель ведущего моста</label>
+                        <select name="drive_model" id="drive_model" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все модели</option>
+                            {% for m in drive_axle_models %}
+                                <option value="{{ m.id }}" {% if selected.drive_model == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="steer_model">Модель управляемого моста</label>
+                        <select name="steer_model" id="steer_model" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все модели</option>
+                            {% for m in steering_axle_models %}
+                                <option value="{{ m.id }}" {% if selected.steer_model == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div style="flex: 1 1 100%; display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                        <a href="?tab=machines" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Сбросить фильтры</a>
+                    </div>
+                </form>
+
+                <!-- Data Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Зав. № машины</th>
+                                <th>Модель техники</th>
+                                <th>Модель двигателя</th>
+                                <th>Зав. № двигателя</th>
+                                <th>Модель трансмиссии</th>
+                                <th>Зав. № трансмиссии</th>
+                                <th>Модель ведущего моста</th>
+                                <th>Зав. № ведущего моста</th>
+                                <th>Модель управляемого моста</th>
+                                <th>Зав. № управляемого моста</th>
+                                <th>Дата отгрузки с завода</th>
+                                <th>Договор поставки №, дата</th>
+                                <th>Грузополучатель</th>
+                                <th>Адрес поставки</th>
+                                <th>Клиент</th>
+                                <th>Сервисная компания</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for machine in machines %}
+                                <tr onclick="window.location='{% url 'machine_detail' machine.vin %}';">
+                                    <td><a href="{% url 'machine_detail' machine.vin %}">{{ machine.vin }}</a></td>
+                                    <td><a href="{% url 'directory_detail' 'TechniqueModel' machine.technique_model.id %}">{{ machine.technique_model.name }}</a></td>
+                                    <td><a href="{% url 'directory_detail' 'EngineModel' machine.engine_model.id %}">{{ machine.engine_model.name }}</a></td>
+                                    <td>{{ machine.engine_num }}</td>
+                                    <td><a href="{% url 'directory_detail' 'TransmissionModel' machine.transmission_model.id %}">{{ machine.transmission_model.name }}</a></td>
+                                    <td>{{ machine.transmission_num }}</td>
+                                    <td><a href="{% url 'directory_detail' 'DriveAxleModel' machine.drive_axle_model.id %}">{{ machine.drive_axle_model.name }}</a></td>
+                                    <td>{{ machine.drive_axle_num }}</td>
+                                    <td><a href="{% url 'directory_detail' 'SteeringAxleModel' machine.steering_axle_model.id %}">{{ machine.steering_axle_model.name }}</a></td>
+                                    <td>{{ machine.steering_axle_num }}</td>
+                                    <td>{{ machine.shipping_date }}</td>
+                                    <td>{{ machine.supply_contract }}</td>
+                                    <td>{{ machine.consignee }}</td>
+                                    <td>{{ machine.delivery_address }}</td>
+                                    <td>{{ machine.client.username }}</td>
+                                    <td><a href="{% url 'directory_detail' 'ServiceCompany' machine.service_company.id %}">{{ machine.service_company.name }}</a></td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="16" style="text-align: center; padding: 2rem;">Нет данных по машинам.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- TAB CONTENT: MAINTENANCE (ТО) -->
+        {% if active_tab == 'maintenances' %}
+            <div class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="color: var(--primary-blue);">История проведения технического обслуживания</h3>
+                    <a href="{% url 'maintenance_add' %}" class="btn-auth">+ Добавить запись ТО</a>
+                </div>
+
+                <!-- Filters -->
+                <form method="get" action="{% url 'home' %}" class="filters-block">
+                    <input type="hidden" name="tab" value="maintenances">
+                    
+                    <div class="filter-group">
+                        <label for="m_type">Вид ТО</label>
+                        <select name="m_type" id="m_type" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все виды</option>
+                            {% for mt in maintenance_types %}
+                                <option value="{{ mt.id }}" {% if selected.m_type == mt.id|stringformat:"s" %}selected{% endif %}>{{ mt.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="m_company">Сервисная компания</label>
+                        <select name="m_company" id="m_company" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все компании</option>
+                            {% for sc in service_companies %}
+                                <option value="{{ sc.id }}" {% if selected.m_company == sc.id|stringformat:"s" %}selected{% endif %}>{{ sc.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="m_vin">Заводской номер машины</label>
+                        <input type="text" name="m_vin" id="m_vin" placeholder="Введите VIN..." value="{{ selected.m_vin|default:'' }}" class="filter-select" style="padding: 0.4rem;">
+                    </div>
+
+                    <div style="flex: 1 1 100%; display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;">
+                        <button type="submit" class="btn-primary" style="padding: 0.4rem 1.2rem; font-size: 0.85rem;">Применить</button>
+                        <a href="?tab=maintenances" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Сбросить</a>
+                    </div>
+                </form>
+
+                <!-- Data Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Зав. № машины</th>
+                                <th>Вид ТО</th>
+                                <th>Дата проведения ТО</th>
+                                <th>Наработка, м/час</th>
+                                <th>№ заказ-наряда</th>
+                                <th>Дата заказ-наряда</th>
+                                <th>Организация, проводившая ТО</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for maintenance in maintenances %}
+                                <tr onclick="window.location='{% url 'maintenance_detail' maintenance.id %}';">
+                                    <td><a href="{% url 'machine_detail' maintenance.machine.vin %}">{{ maintenance.machine.vin }}</a></td>
+                                    <td><a href="{% url 'directory_detail' 'MaintenanceType' maintenance.maintenance_type.id %}">{{ maintenance.maintenance_type.name }}</a></td>
+                                    <td>{{ maintenance.maintenance_date }}</td>
+                                    <td>{{ maintenance.operating_hours }}</td>
+                                    <td><a href="{% url 'maintenance_detail' maintenance.id %}">{{ maintenance.work_order_num }}</a></td>
+                                    <td>{{ maintenance.work_order_date }}</td>
+                                    <td><a href="{% url 'directory_detail' 'ServiceCompany' maintenance.service_company.id %}">{{ maintenance.service_company.name }}</a></td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 2rem;">Нет записей о проведенных ТО.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- TAB CONTENT: COMPLAINTS (РЕКЛАМАЦИИ) -->
+        {% if active_tab == 'complaints' %}
+            <div class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="color: var(--primary-blue);">Рекламации и гарантийные случаи</h3>
+                    {% if user.role == 'manager' or user.role == 'service' %}
+                        <a href="{% url 'complaint_add' %}" class="btn-auth">+ Добавить рекламацию</a>
+                    {% endif %}
+                </div>
+
+                <!-- Filters -->
+                <form method="get" action="{% url 'home' %}" class="filters-block">
+                    <input type="hidden" name="tab" value="complaints">
+                    
+                    <div class="filter-group">
+                        <label for="c_node">Узел отказа</label>
+                        <select name="c_node" id="c_node" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все узлы</option>
+                            {% for fn in failure_nodes %}
+                                <option value="{{ fn.id }}" {% if selected.c_node == fn.id|stringformat:"s" %}selected{% endif %}>{{ fn.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="c_method">Способ восстановления</label>
+                        <select name="c_method" id="c_method" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все способы</option>
+                            {% for rm in recovery_methods %}
+                                <option value="{{ rm.id }}" {% if selected.c_method == rm.id|stringformat:"s" %}selected{% endif %}>{{ rm.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="c_company">Сервисная компания</label>
+                        <select name="c_company" id="c_company" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Все компании</option>
+                            {% for sc in service_companies %}
+                                <option value="{{ sc.id }}" {% if selected.c_company == sc.id|stringformat:"s" %}selected{% endif %}>{{ sc.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div style="flex: 1 1 100%; display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                        <a href="?tab=complaints" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Сбросить фильтры</a>
+                    </div>
+                </form>
+
+                <!-- Data Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Зав. № машины</th>
+                                <th>Дата отказа</th>
+                                <th>Наработка, м/час</th>
+                                <th>Узел отказа</th>
+                                <th>Описание отказа</th>
+                                <th>Способ восстановления</th>
+                                <th>Используемые запасные части</th>
+                                <th>Дата восстановления</th>
+                                <th>Время простоя (дней)</th>
+                                <th>Сервисная компания</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for complaint in complaints %}
+                                <tr onclick="window.location='{% url 'complaint_detail' complaint.id %}';">
+                                    <td><a href="{% url 'machine_detail' complaint.machine.vin %}">{{ complaint.machine.vin }}</a></td>
+                                    <td>{{ complaint.failure_date }}</td>
+                                    <td>{{ complaint.operating_hours }}</td>
+                                    <td><a href="{% url 'directory_detail' 'FailureNode' complaint.failure_node.id %}">{{ complaint.failure_node.name }}</a></td>
+                                    <td><a href="{% url 'complaint_detail' complaint.id %}">{{ complaint.failure_description|truncatewords:10 }}</a></td>
+                                    <td><a href="{% url 'directory_detail' 'RecoveryMethod' complaint.recovery_method.id %}">{{ complaint.recovery_method.name }}</a></td>
+                                    <td>{{ complaint.parts_used|default:"-" }}</td>
+                                    <td>{{ complaint.recovery_date }}</td>
+                                    <td style="font-weight: bold; color: var(--accent-red);">{{ complaint.downtime }}</td>
+                                    <td><a href="{% url 'directory_detail' 'ServiceCompany' complaint.service_company.id %}">{{ complaint.service_company.name }}</a></td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="10" style="text-align: center; padding: 2rem;">Нет зарегистрированных рекламаций.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

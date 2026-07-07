@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Мой Силант - Сервисный Портал{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <div class="logo-container">
+                    <a href="/">
+                        <img src="{% static 'images/logo.jpg' %}" alt="Силант Логотип" class="logo-img">
+                    </a>
+                </div>
+                
+                <div class="nav-links">
+                    <div class="nav-item">
+                        <img src="{% static 'images/website_white.png' %}" alt="Сайт" class="nav-icon-png">
+                        <a href="https://chzsa.ru" target="_blank">Сайт ЧЗСА</a>
+                    </div>
+                    <div class="nav-item">
+                        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                        </svg>
+                        <a href="https://t.me/chzsa21" target="_blank">Telegram ЧЗСА</a>
+                    </div>
+                    <div class="nav-item">
+                        <img src="{% static 'images/phone_white.png' %}" alt="Телефон" class="nav-icon-png">
+                        <a href="tel:+78352201209">+7-8352-20-12-09</a>
+                    </div>
+                </div>
+                
+                <div class="auth-block">
+                    {% if user.is_authenticated %}
+                        <span class="auth-info">
+                            Вошли как: 
+                            <strong>
+                                {% if user.role == 'manager' %}
+                                    Менеджер ({{ user.username }})
+                                {% elif user.role == 'client' %}
+                                    Клиент: {{ user.first_name }}
+                                {% elif user.role == 'service' %}
+                                    Сервис: {{ user.service_company.name }}
+                                {% endif %}
+                            </strong>
+                        </span>
+                        <form method="post" action="{% url 'account_logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-auth">Выйти</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'account_login' %}" class="btn-auth">Авторизация</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="header-title">
+                Электронная сервисная книжка "Мой Силант"
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <strong>Контакты ЧЗСА:</strong> +7-8352-20-12-09 | Telegram: <a href="https://t.me/chzsa21" target="_blank" style="color: var(--beige-bg); text-decoration: underline;">https://t.me/chzsa21</a> | Сайт: <a href="https://chzsa.ru" target="_blank" style="color: var(--beige-bg); text-decoration: underline;">https://chzsa.ru</a>
+            </div>
+            <div class="footer-right">
+                Мой Силант {% now "Y" %} &copy; Разработано для ЧЗСА.
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_body %}{% endblock %}
+</body>
+</html>

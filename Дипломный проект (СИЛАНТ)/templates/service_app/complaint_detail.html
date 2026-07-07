@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Рекламация машины {{ complaint.machine.vin }} - Детали{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--beige-bg); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin: 0;">Рекламация по машине: {{ complaint.machine.vin }}</h2>
+        <div>
+            {% if user.role == 'manager' %}
+                <a href="{% url 'complaint_edit' complaint.id %}" class="btn-auth">Редактировать</a>
+            {% endif %}
+            <a href="{% url 'home' %}?tab=complaints" class="btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+
+    <div class="detail-grid">
+        <!-- 1. Machine Link -->
+        <div class="detail-item">
+            <div class="detail-label">Машина (Заводской №)</div>
+            <div class="detail-value">
+                <a href="{% url 'machine_detail' complaint.machine.vin %}">{{ complaint.machine.vin }}</a>
+            </div>
+            <div class="detail-desc">Модель техники: {{ complaint.machine.technique_model.name }}</div>
+        </div>
+
+        <!-- 2. Failure Date -->
+        <div class="detail-item">
+            <div class="detail-label">Дата отказа</div>
+            <div class="detail-value">{{ complaint.failure_date }}</div>
+        </div>
+
+        <!-- 3. Operating Hours -->
+        <div class="detail-item">
+            <div class="detail-label">Наработка, м/час</div>
+            <div class="detail-value">{{ complaint.operating_hours }} м/ч</div>
+        </div>
+
+        <!-- 4. Failure Node -->
+        <div class="detail-item">
+            <div class="detail-label">Узел отказа</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'FailureNode' complaint.failure_node.id %}">{{ complaint.failure_node.name }}</a>
+            </div>
+            {% if complaint.failure_node.description %}
+                <div class="detail-desc">{{ complaint.failure_node.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 5. Recovery Method -->
+        <div class="detail-item">
+            <div class="detail-label">Способ восстановления</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'RecoveryMethod' complaint.recovery_method.id %}">{{ complaint.recovery_method.name }}</a>
+            </div>
+            {% if complaint.recovery_method.description %}
+                <div class="detail-desc">{{ complaint.recovery_method.description }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 6. Recovery Date -->
+        <div class="detail-item">
+            <div class="detail-label">Дата восстановления</div>
+            <div class="detail-value">{{ complaint.recovery_date }}</div>
+        </div>
+
+        <!-- 7. Downtime (calculated) -->
+        <div class="detail-item" style="border-left-color: var(--accent-red); background-color: #fef2f2;">
+            <div class="detail-label">Время простоя техники</div>
+            <div class="detail-value" style="color: var(--accent-red); font-size: 1.3rem;">{{ complaint.downtime }} дн.</div>
+            <div class="detail-desc">Рассчитывается как разница между датой восстановления и датой отказа.</div>
+        </div>
+
+        <!-- 8. Service Company -->
+        <div class="detail-item">
+            <div class="detail-label">Сервисная компания</div>
+            <div class="detail-value">
+                <a href="{% url 'directory_detail' 'ServiceCompany' complaint.service_company.id %}">{{ complaint.service_company.name }}</a>
+            </div>
+            {% if complaint.service_company.description %}
+                <div class="detail-desc">{{ complaint.service_company.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 9. Failure Description -->
+    <div class="detail-item" style="margin-bottom: 1.5rem;">
+        <div class="detail-label">Описание отказа</div>
+        <div class="detail-value" style="font-weight: normal; white-space: pre-line;">{{ complaint.failure_description }}</div>
+    </div>
+
+    <!-- 10. Parts Used -->
+    <div class="detail-item" style="border-left-color: var(--beige-bg);">
+        <div class="detail-label">Используемые запасные части</div>
+        <div class="detail-value" style="font-weight: normal; white-space: pre-line;">{{ complaint.parts_used|default:"Запасные части не использовались." }}</div>
+    </div>
+</div>
+{% endblock %}

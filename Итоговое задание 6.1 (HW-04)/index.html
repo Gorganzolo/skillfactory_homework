@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лента новостей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        #news-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .news-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .news-time {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .news-text {
+            font-size: 1.1em;
+            color: #444;
+        }
+        #status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .status-connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Лента новостей</h1>
+    <div id="status" class="status-disconnected">Подключение к серверу...</div>
+    <div id="news-container">
+        <!-- Новости будут добавляться сюда -->
+    </div>
+
+    <script>
+        const statusElement = document.getElementById('status');
+        const newsContainer = document.getElementById('news-container');
+
+        let ws;
+
+        function connect() {
+            // Определяем протокол: wss для https, ws для http
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
+
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = function() {
+                statusElement.textContent = 'Подключено к серверу';
+                statusElement.className = 'status-connected';
+            };
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    // Если сервер присылает массив новостей (например, историю при подключении)
+                    if (Array.isArray(data)) {
+                        data.forEach(news => addNewsItem(news));
+                    } else {
+                        // Одиночная новость
+                        addNewsItem(data);
+                    }
+                } catch (e) {
+                    console.error('Ошибка при обработке сообщения:', e);
+                }
+            };
+
+            ws.onclose = function() {
+                statusElement.textContent = 'Соединение разорвано. Переподключение...';
+                statusElement.className = 'status-disconnected';
+                // Пытаемся переподключиться через 3 секунды
+                setTimeout(connect, 3000);
+            };
+
+            ws.onerror = function(err) {
+                console.error('Ошибка WebSocket:', err);
+                ws.close();
+            };
+        }
+
+        function addNewsItem(news) {
+            const item = document.createElement('div');
+            item.className = 'news-item';
+
+            const time = document.createElement('div');
+            time.className = 'news-time';
+            time.textContent = news.time || new Date().toLocaleString();
+
+            const text = document.createElement('div');
+            text.className = 'news-text';
+            text.textContent = news.text;
+
+            item.appendChild(time);
+            item.appendChild(text);
+
+            // Добавляем новые новости в начало списка
+            newsContainer.insertBefore(item, newsContainer.firstChild);
+        }
+
+        // Запускаем подключение при загрузке
+        connect();
+    </script>
+</body>
+</html>
